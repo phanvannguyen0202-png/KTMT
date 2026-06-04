@@ -1,14 +1,12 @@
-Web luyện thi Kiến trúc máy tính V6
+Web luyện thi Kiến trúc máy tính V7
 
 Mới:
-- Giao diện 1 câu / 1 màn hình, không còn hiển thị danh sách câu dài bên dưới.
-- Có danh sách số câu bên phải, bấm số nào nhảy đến câu đó.
-- Phím 1/2/3/4 chọn A/B/C/D.
-- Phím mũi tên trái/phải chuyển câu.
-- Tick nhiều đề để gộp câu hỏi.
-- Full 400 câu.
-- Lưu lịch sử nộp bài.
-- Câu 327 đáp án đúng là A.
+- Ghim câu hỏi phân vân.
+- Có nút “Học câu đã ghim”.
+- Sau khi nộp có thể lọc: Tất cả / Câu đúng / Câu sai / Câu ghim.
+- Danh sách câu gọn hơn, có sao vàng với câu đã ghim.
+- Có trộn câu hỏi và trộn đáp án.
+- Phím 1/2/3/4 chọn A/B/C/D, phím P ghim câu.
 
 Cách dùng:
-Giải nén ZIP rồi mở index.html bằng Chrome/Edge.
+Giải nén ZIP rồi mở index.html.
