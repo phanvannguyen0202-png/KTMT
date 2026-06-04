@@ -246,6 +246,7 @@ function renderNavigator(){
       renderCurrentQuestion();
       renderNavigator();
       scrollMainTop();
+      autoSaveAppData();
     };
 
     nav.appendChild(btn);
@@ -279,6 +280,7 @@ function prevQuestion(){
     renderCurrentQuestion();
     renderNavigator();
     scrollMainTop();
+    autoSaveAppData();
   }
 }
 
@@ -288,6 +290,7 @@ function nextQuestion(){
     renderCurrentQuestion();
     renderNavigator();
     scrollMainTop();
+    autoSaveAppData();
   }
 }
 
@@ -298,6 +301,7 @@ function goFirstUnanswered(){
     renderCurrentQuestion();
     renderNavigator();
     scrollMainTop();
+    autoSaveAppData();
   }else{
     alert("Bạn đã làm hết các câu trong bộ này.");
   }
@@ -439,32 +443,55 @@ document.addEventListener("keydown", (e)=>{
 });
 
 
+
+function getSavedAnswersKey(){
+  return "ktmtSavedData_v9";
+}
+
 function saveAppData(silent = true){
-  const payload = {
-    version: 8,
-    savedAt: new Date().toLocaleString("vi-VN"),
-    currentMode,
-    selectedTests,
-    currentQuestions,
-    userAnswers,
-    showAnswerMode,
-    lastSubmitted,
-    questionFilter,
-    currentIndex,
-    pinnedIds: getPinnedIds(),
-    history: getHistory()
-  };
+  try{
+    const payload = {
+      version: 9,
+      savedAt: new Date().toISOString(),
+      savedAtText: new Date().toLocaleString("vi-VN"),
+      currentMode,
+      selectedTests,
+      currentQuestions,
+      userAnswers,
+      showAnswerMode,
+      lastSubmitted,
+      questionFilter,
+      currentIndex,
+      pinnedIds: getPinnedIds(),
+      history: getHistory(),
+      totalQuestions: currentQuestions.length
+    };
 
-  localStorage.setItem("ktmtSavedData", JSON.stringify(payload));
+    localStorage.setItem(getSavedAnswersKey(), JSON.stringify(payload));
 
-  if(!silent){
-    alert("Đã lưu dữ liệu. Lần sau mở lại trên cùng trình duyệt/link này sẽ không mất câu ghim, lịch sử và bài đang làm.");
+    // Backup thêm key cũ để tránh mất dữ liệu khi đổi version.
+    localStorage.setItem("ktmtSavedData", JSON.stringify(payload));
+
+    updateSaveStatus(`Đã lưu: ${payload.savedAtText}`);
+
+    if(!silent){
+      alert("Đã lưu dữ liệu trên trình duyệt này. Mở lại đúng link này trên cùng thiết bị/trình duyệt sẽ tự khôi phục.");
+    }
+
+    return true;
+  }catch(e){
+    console.error("Không thể lưu dữ liệu", e);
+    updateSaveStatus("Lưu thất bại. Có thể trình duyệt đang chặn localStorage.");
+    if(!silent){
+      alert("Lưu thất bại. Có thể trình duyệt đang chặn localStorage hoặc đang ở chế độ riêng tư.");
+    }
+    return false;
   }
 }
 
 function restoreAppData(){
   try{
-    const raw = localStorage.getItem("ktmtSavedData");
+    const raw = localStorage.getItem(getSavedAnswersKey()) || localStorage.getItem("ktmtSavedData");
     if(!raw) return false;
 
     const data = JSON.parse(raw);
@@ -516,21 +543,31 @@ function restoreAppData(){
     }
 
     $("totalCount").textContent = currentQuestions.length;
-    $("scoreCount").textContent = "-";
+    $("scoreCount").textContent = data.lastSubmitted ? ($("scoreCount").textContent || "-") : "-";
     $("resultBox").classList.add("hidden");
 
     renderAll();
+    updateSaveStatus(`Đã khôi phục dữ liệu lưu lúc: ${data.savedAtText || "không rõ"}`);
     return true;
   }catch(e){
     console.warn("Không thể khôi phục dữ liệu đã lưu", e);
+    updateSaveStatus("Không thể khôi phục dữ liệu đã lưu.");
     return false;
   }
+}
+
+function updateSaveStatus(text){
+  const el = $("saveStatus");
+  if(el) el.textContent = text;
 }
 
 function autoSaveAppData(){
   saveAppData(true);
 }
 
+window.addEventListener("beforeunload", ()=>{
+  saveAppData(true);
+});
 
 function escapeHtml(str){
   return String(str || "").replace(/[&<>"']/g, m=>({

@@ -805,3 +805,16 @@ body{
 .save:hover{
   background:linear-gradient(135deg,#4ade80,#22c55e);
 }
+
+
+.save-status{
+  margin-top:8px;
+  color:#bbf7d0;
+  font-size:12px;
+  line-height:1.35;
+  text-align:center;
+  background:rgba(22,163,74,.12);
+  border:1px solid rgba(134,239,172,.22);
+  border-radius:12px;
+  padding:8px;
+}
