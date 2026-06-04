@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Luyện thi Kiến trúc máy tính</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">KT</div>
+        <div>
+          <h1>Kiến trúc máy tính</h1>
+          <p>Web luyện thi trắc nghiệm</p>
+        </div>
+      </div>
+
+      <div class="side-card hero-card">
+        <span class="badge">400 câu hỏi</span>
+        <h2>Luyện nhanh, chấm ngay</h2>
+        <p>Tick nhiều đề để gộp câu hỏi. Màn hình chỉ hiện 1 câu đang làm.</p>
+      </div>
+
+      <div class="side-card">
+        <div class="section-title">
+          <h2>Chọn bộ đề</h2>
+          <span id="modeLabel">Đề 1</span>
+        </div>
+
+        <button id="fullBtn" class="test-btn full-test">Full 400 câu</button>
+
+        <div class="multi-tools">
+          <button id="selectAllBtn" class="mini-btn">Chọn 10 đề</button>
+          <button id="clearAllBtn" class="mini-btn">Bỏ chọn</button>
+        </div>
+
+        <div id="testList" class="test-list multi"></div>
+        <button id="startSelectedBtn" class="btn primary full">Bắt đầu đề đã chọn</button>
+      </div>
+
+      <div class="side-card">
+        <h2>Phím tắt</h2>
+        <div class="hotkeys">
+          <span><b>1</b> = A</span>
+          <span><b>2</b> = B</span>
+          <span><b>3</b> = C</span>
+          <span><b>4</b> = D</span>
+          <span><b>←</b> Câu trước</span>
+          <span><b>→</b> Câu sau</span>
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h2>Tùy chọn</h2>
+        <label class="switch-row">
+          <input type="checkbox" id="shuffleToggle">
+          <span>Trộn câu hỏi</span>
+        </label>
+        <label class="switch-row">
+          <input type="checkbox" id="instantToggle">
+          <span>Hiện đúng/sai ngay</span>
+        </label>
+        <label class="switch-row">
+          <input type="checkbox" id="autoNextToggle" checked>
+          <span>Tự sang câu tiếp</span>
+        </label>
+        <button id="resetBtn" class="btn ghost full">Làm lại bộ hiện tại</button>
+      </div>
+
+      <div class="side-card">
+        <div class="section-title">
+          <h2>Lịch sử làm bài</h2>
+          <button id="clearHistoryBtn" class="mini-btn danger">Xóa</button>
+        </div>
+        <div class="history-summary">
+          <div><b id="historyCount">0</b><span>Lần làm</span></div>
+          <div><b id="historyBest">-</b><span>Cao nhất</span></div>
+          <div><b id="historyAvg">-</b><span>Trung bình</span></div>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Computer Architecture Quiz</p>
+          <h2 id="examTitle">Chọn một đề để bắt đầu</h2>
+        </div>
+        <div class="stats">
+          <div class="stat"><b id="answeredCount">0</b><span>Đã làm</span></div>
+          <div class="stat"><b id="totalCount">0</b><span>Tổng câu</span></div>
+          <div class="stat"><b id="scoreCount">-</b><span>Điểm</span></div>
+        </div>
+      </header>
+
+      <div class="progress-card">
+        <div class="progress-info">
+          <span>Tiến độ làm bài</span>
+          <b id="progressText">0%</b>
+        </div>
+        <div class="progress-wrap">
+          <div id="progressBar" class="progress"></div>
+        </div>
+      </div>
+
+      <section id="resultBox" class="result hidden"></section>
+
+      <section class="workspace">
+        <div class="question-area">
+          <section id="questionSingle" class="question-single"></section>
+
+          <div class="question-actions">
+            <button id="prevBtn" class="btn light">← Câu trước</button>
+            <button id="nextBtn" class="btn light">Câu sau →</button>
+          </div>
+        </div>
+
+        <aside class="navigator-card">
+          <div class="navigator-head">
+            <h3>Danh sách câu</h3>
+            <span id="currentText">Câu 1/40</span>
+          </div>
+          <div id="questionNavigator" class="question-navigator"></div>
+        </aside>
+      </section>
+
+      <div class="actions">
+        <button id="submitBtn" class="btn primary">Nộp bài / Chấm điểm</button>
+        <button id="showAnswerBtn" class="btn dark">Hiện đáp án</button>
+        <button id="firstUnansweredBtn" class="btn light">Câu chưa làm</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
